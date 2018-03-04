@@ -5,6 +5,6 @@
     "dependencies": {
         "elm-format": "^0.7.0-exp",
         "elm-test": "^0.18.9",
-        "elm-verify-examples": "^1.0.2"
+        "elm-verify-examples": "^2.3.1"
     }
 }

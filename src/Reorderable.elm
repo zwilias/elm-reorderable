@@ -12,6 +12,7 @@ module Reorderable
         , moveDown
         , moveUp
         , push
+        , reverse
         , set
         , singleton
         , swap
@@ -34,7 +35,7 @@ while shuffling data around.
 
 # Manipulation
 
-@docs swap, moveUp, moveDown, move, insertAt, insertAfter, drop
+@docs swap, moveUp, moveDown, move, insertAt, insertAfter, drop, reverse
 
 
 # List-y stuff
@@ -325,6 +326,27 @@ move from to ((Reorderable nextKey values) as original) =
                         Array.push value before
                             |> flip Array.append between
                             |> flip Array.append after
+
+
+{-| Reverse the order of the entries.
+
+    fromList [ "first", "second", "third" ]
+        |> reverse
+        |> toKeyedList
+    --> [ ( "2", "third" )
+    --> , ( "1", "second" )
+    --> , ( "0", "first" )
+    --> ]
+
+-}
+reverse : Reorderable a -> Reorderable a
+reverse (Reorderable nextKey values) =
+    Reorderable nextKey (arrayReverse values)
+
+
+arrayReverse : Array a -> Array a
+arrayReverse =
+    Array.toList >> List.reverse >> Array.fromList
 
 
 {-| Run an update-function on a specified item.
