@@ -1,0 +1,15 @@
+{
+    "type": "package",
+    "name": "zwilias/elm-reorderable",
+    "summary": "Reorder entries while maintaining a key/value correspondence.",
+    "license": "BSD-3-Clause",
+    "version": "1.1.0",
+    "exposed-modules": [
+        "Reorderable"
+    ],
+    "elm-version": "0.19.0 <= v < 0.20.0",
+    "dependencies": {
+        "elm/core": "1.0.0 <= v < 2.0.0"
+    },
+    "test-dependencies": {}
+}

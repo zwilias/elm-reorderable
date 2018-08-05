@@ -44,7 +44,7 @@ while shuffling data around.
 
 -}
 
-import Array.Hamt as Array exposing (Array)
+import Array exposing (Array)
 
 
 {-| -}
@@ -106,8 +106,8 @@ isEmpty (Reorderable _ values) =
 
 -}
 singleton : a -> Reorderable a
-singleton =
-    flip push empty
+singleton v =
+    push v empty
 
 
 {-| Pushes a piece of data onto the end of a `Reorderable`.
@@ -317,15 +317,17 @@ move from to ((Reorderable nextKey values) as original) =
             Reorderable nextKey <|
                 case compare from to of
                     LT ->
-                        Array.append before between |> Array.push value |> flip Array.append after
+                        Array.append before between
+                            |> Array.push value
+                            |> (\x -> Array.append x after)
 
                     EQ ->
                         values
 
                     GT ->
                         Array.push value before
-                            |> flip Array.append between
-                            |> flip Array.append after
+                            |> (\x -> Array.append x between)
+                            |> (\x -> Array.append x after)
 
 
 {-| Reverse the order of the entries.
@@ -422,7 +424,7 @@ This retains the key during swap/insertAt/drop/move*/.. operations, so that your
 -}
 toKeyedList : Reorderable a -> List ( String, a )
 toKeyedList (Reorderable _ values) =
-    Array.foldr (\( key, val ) acc -> ( toString key, val ) :: acc) [] values
+    Array.foldr (\( key, val ) acc -> ( String.fromInt key, val ) :: acc) [] values
 
 
 {-| Initialize a `Reorderable a` from a `List a`. Useful for initializing data
