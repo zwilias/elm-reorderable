@@ -1,25 +1,8 @@
-module Reorderable
-    exposing
-        ( Reorderable
-        , drop
-        , empty
-        , fromList
-        , get
-        , insertAfter
-        , insertAt
-        , isEmpty
-        , move
-        , moveDown
-        , moveUp
-        , push
-        , reverse
-        , set
-        , singleton
-        , swap
-        , toKeyedList
-        , toList
-        , update
-        )
+module Reorderable exposing
+    ( Reorderable, empty, isEmpty, singleton, push, get, set, update
+    , swap, moveUp, moveDown, move, insertAt, insertAfter, drop, reverse
+    , fromList, toList, toKeyedList
+    )
 
 {-| `Reorderable` is useful for structures where you want to allow a user to
 reorder things, while still wanting to make effective use of `Html.Keyed`. The
@@ -290,12 +273,14 @@ move from to ((Reorderable nextKey values) as original) =
                 firstHole =
                     if from < to then
                         1
+
                     else
                         0
 
                 secondHole =
                     if from > to then
                         1
+
                     else
                         0
 
@@ -418,7 +403,7 @@ rendering a `Html.Keyed` node.
     --> , ( "2", "c" )
     --> ]
 
-This retains the key during swap/insertAt/drop/move*/.. operations, so that your
+This retains the key during swap/insertAt/drop/move\*/.. operations, so that your
 `Html.Keyed` node can work correctly.
 
 -}
