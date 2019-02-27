@@ -2,6 +2,7 @@ module Reorderable exposing
     ( Reorderable, empty, isEmpty, singleton, push, get, set, update
     , swap, moveUp, moveDown, move, insertAt, insertAfter, drop, reverse
     , fromList, toList, toKeyedList
+    , map, indexedMap
     )
 
 {-| `Reorderable` is useful for structures where you want to allow a user to
@@ -24,6 +25,11 @@ while shuffling data around.
 # List-y stuff
 
 @docs fromList, toList, toKeyedList
+
+
+# Transformation
+
+@docs map, indexedMap
 
 -}
 
@@ -418,3 +424,17 @@ and decoding with `Json.Decode.map Reorderable.fromList`.
 fromList : List a -> Reorderable a
 fromList values =
     List.foldl push empty values
+
+
+{-| Transform the values in a reorderable
+-}
+map : (a -> b) -> Reorderable a -> Reorderable b
+map f (Reorderable nextKey values) =
+    Reorderable nextKey (Array.map (Tuple.mapSecond f) values)
+
+
+{-| Transform the values in a reorderable with their index
+-}
+indexedMap : (Int -> a -> b) -> Reorderable a -> Reorderable b
+indexedMap f (Reorderable nextKey values) =
+    Reorderable nextKey (Array.indexedMap (\idx ( x, val ) -> ( x, f idx val )) values)
