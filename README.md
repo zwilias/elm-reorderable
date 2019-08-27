@@ -21,12 +21,15 @@ arbitrarily moving an item through the structure.
 ```elm
 module Main exposing (main)
 
+import Browser
 import Html exposing (Html, text)
 import Html.Attributes as Attr
 import Html.Events as Events
 import Html.Keyed as Keyed
 import Reorderable exposing (Reorderable)
+import Tuple
 
+--- updated to Elm 0.19
 
 type alias Model =
     Reorderable String
@@ -85,18 +88,16 @@ viewItem idx ( key, value ) =
             , Html.li [ Events.onClick <| MoveDown idx ] [ text "move down" ]
             ]
         ]
-        |> (,) key
+        |> Tuple.pair key
 
 
-main : Program Never Model Msg
 main =
-    Html.beginnerProgram
-        { model = initialModel
-        , view = view
+    Browser.sandbox
+        { init = initialModel
         , update = update
+        , view = view
         }
 ```
-
 ---
 
 Made with ❤️
