@@ -1,5 +1,5 @@
 module Reorderable exposing
-    ( Reorderable, empty, isEmpty, singleton, push, get, set, update
+    ( Reorderable, empty, isEmpty, length, singleton, push, get, set, update
     , swap, moveUp, moveDown, move, insertAt, insertAfter, drop, reverse
     , fromList, toList, toKeyedList
     , map, indexedMap
@@ -14,7 +14,7 @@ while shuffling data around.
 
 # Basics
 
-@docs Reorderable, empty, isEmpty, singleton, push, get, set, update
+@docs Reorderable, empty, isEmpty, length, singleton, push, get, set, update
 
 
 # Manipulation
@@ -85,6 +85,26 @@ empty =
 isEmpty : Reorderable a -> Bool
 isEmpty (Reorderable _ values) =
     Array.isEmpty values
+
+
+{-| Determine the length of a `Reorderable`.
+
+    empty
+        |> length
+    --> 0
+
+    singleton "hi"
+        |> length
+    --> 1
+
+    fromList [ "hello", "world" ]
+        |> length
+    --> 2
+
+-}
+length : Reorderable a -> Int
+length (Reorderable _ values) =
+    Array.length values
 
 
 {-| Create a reorderable from a single piece of data.
